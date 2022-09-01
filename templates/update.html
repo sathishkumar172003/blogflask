@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+<div class="form">
+
+<form method="post" action="{{url_for('update')}}" enctype="multipart/form-data" novalidate>
+    {{ form.csrf_token}}
+    <i class="fa-solid fa-user fa-2x signicon"></i>
+        <legend class="legendstyle"> Account Info </legend>
+    <div class="form-group">
+        {{ form.username.label (class = 'form-label') }}
+        {% if form.username.errors %}
+            {{form.username (class = 'form-control is-invalid' ) }}
+           <div class="invalid-feedback">
+                    {% for each in form.username.errors %}
+                    <span class="text-danger">{{each}}</span>
+                    {% endfor %}
+                </div>
+        {% else %}
+            {{ form.username (class = 'form-control') }}
+        {% endif %}
+    </div>
+    <div class="form-group">
+        {{ form.email.label (class = 'form-label') }}
+        {% if form.email.errors %}
+            {{form.email (class = 'form-control is-invalid' ) }}
+            <div class="invalid-feedback">
+                {% for each in form.email.errors %}
+                    <span>{{each}}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.email (class = 'form-control') }}
+        {% endif %}
+    </div>
+    <div class = 'form-group'>
+        {{ form.profile_pic.label  }}<br>
+        {{ form.profile_pic (class = 'form-control-file' )}}
+        {% if form.profile_pic.errors %}
+            {% for each in form.profile_pic.errors %}
+                <span class = 'text-danger'>{{each}}</span><br>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <<a href="{{url_for('reset_request')}}">Forgot password</a>
+    <div class = 'form-group mt-3'>
+        {{ form.submit (class = 'btn btn-outline-success') }}
+    </div>
+
+</form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+.form {
+width: 600px;
+padding: 25px;
+border: 5px solid black;
+margin-left: 100px;
+margin-top : 50px;
+position:relative;
+left:350px;
+top:50px;
+}
+.signicon {
+position:relative;
+left : 255px;
+}
+.legendstyle {
+text-align: center;
+}
+.account-img{
+width:120px;
+margin:20px;
+float: left;
+height:150px;
+}
+.text-floating{
+position:relative; top:20px;
+}
+ a:link{
+ text-decoration:none;
+ }

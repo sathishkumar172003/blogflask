@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="form" style="position:relative; left:350px; top:50px;">
+
+
+<form action="" method="post" novalidate>
+    <i class="fa-solid fa-paste fa-2x"></i>
+    <h3 class="text">New Post</h3>
+    {{form.csrf_token }}
+    <div class="form-group mt-4">
+        {{ form.title.label (class = 'form-label' ) }}
+        {% if form.title.errors %}
+            {{ form.title (class = 'form-control is-invalid' ) }}
+            <div class="invalid-feedback">
+                {% for each in form.title.errors %}
+                    <span>{{each}}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.title  (class = 'form-control') }}
+        {% endif %}
+    </div>
+    <div class="form-group">
+        {{form.content.label (class = 'form-label' ) }}
+        {% if form.content.errors %}
+            {{ form.content (class = 'form-control form-control-lg is-invalid' ) }}
+            <div class="invalid-feedback">
+                {% for each in form.content.errors %}
+                    <span>{{each}}</span>
+                {% endfor %}
+            </div>
+
+        {% else %}
+        {{ form.content (class = 'form-control form-control-lg ' ) }}
+        {% endif %}
+    </div>
+    <div class = 'form-group mt-3'>
+        {{ form.submit (class = 'btn btn-outline-success' ) }}
+    </div>
+</form>
+    </div>
+
+{% endblock content %}
