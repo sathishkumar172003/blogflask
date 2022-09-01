@@ -293,5 +293,6 @@ def change_password():
             db.session.commit()
     return render_template('change_password.html', form = form, user = current_user)
 
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
