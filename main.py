@@ -1,21 +1,13 @@
-import os
-
-from flask_mail import Mail, Message
-
 from flask import Flask, render_template, flash , redirect, url_for, request, abort
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user,current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, IntegerField, SubmitField, EmailField, PasswordField, validators, TextAreaField
 from wtforms.validators import EqualTo, DataRequired, Length, Email, ValidationError
-
-
-
-
+import email_validator
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = 'sathishkumar17'
@@ -26,25 +18,6 @@ bcrypt = Bcrypt()
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category= 'info'
-
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] =   True
-app.config['MAIL_USERNAME'] = 'sthshkmr172003@gmail.com'
-app.config['MAIL_PASSWORD'] = 'sathishkumar17'
-
-mail = Mail(app)
-
-# def send_mail(email):
-#     emai = email
-#     msg = Message('password reset request', sender='sthshkmr172003@gmail.com',
-#                   recipients=[emai])
-#     msg.body = f'''To reset your password visit  this link :{url_for('change_password',
-#                                                                      _external=True)} If you
-# have not done the request please ignore'''
-#     #mail.send(msg)
-
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -66,10 +39,10 @@ class Post (db.Model):
     posted_date = db.Column(db.DateTime, default = datetime.utcnow )
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
 
-# db.create_all()
+db.create_all()
 
 
-import email_validator
+
 class LoginForm (FlaskForm):
     email = EmailField("Enter your email : ", validators=[ DataRequired(), Email()])
     password = PasswordField("Enter your password ", validators=[ DataRequired()])
