@@ -4,8 +4,8 @@ from datetime import datetime
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user,current_user
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, IntegerField, SubmitField, EmailField, PasswordField, validators, TextAreaField
+
+from wtforms import StringField, SubmitField, EmailField, PasswordField, TextAreaField
 from wtforms.validators import EqualTo, DataRequired, Length, Email, ValidationError
 import email_validator
 
@@ -66,7 +66,7 @@ class SignForm(FlaskForm):
 class UpdateForm(FlaskForm):
     username = StringField(label="Enter your name", validators=[DataRequired(), Length(min=2, max=50)])
     email = EmailField(label="Enter your email ", validators=[ DataRequired(), Email() ])
-    profile_pic = FileField(label="choose profile", validators=[FileAllowed("Jpf","png")] )
+    # profile_pic = FileField(label="choose profile", validators=[FileAllowed("Jpf","png")] )
     submit = SubmitField("Update ")
 
     def validate_email(self, email):
@@ -264,6 +264,8 @@ def change_password():
         if user:
             user.password = hashed_password
             db.session.commit()
+            flash("password changed successfully", "success")
+            return redirect(url_for('login'))
     return render_template('change_password.html', form = form, user = current_user)
 
 
