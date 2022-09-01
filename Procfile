@@ -1,1 +1,2 @@
-web: gunicorn blogflask.wsgi
+web: gunicorn main:app
+
