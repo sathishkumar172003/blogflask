@@ -5,8 +5,8 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user,current_user
 from flask_wtf import FlaskForm
 
-from wtforms import StringField, SubmitField, EmailField, PasswordField, TextAreaField
-from wtforms.validators import EqualTo, DataRequired, Length, Email, ValidationError
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField
+from wtforms.validators import EqualTo, DataRequired, Length, ValidationError
 import email_validator
 
 app = Flask(__name__)
@@ -44,14 +44,14 @@ db.create_all()
 
 
 class LoginForm (FlaskForm):
-    email = EmailField("Enter your email : ", validators=[ DataRequired(), Email()])
+    email = StringField("Enter your email : ", validators=[ DataRequired()])
     password = PasswordField("Enter your password ", validators=[ DataRequired()])
     submit = SubmitField("Login")
 
 
 class SignForm(FlaskForm):
     username = StringField(label="Enter your name", validators=[DataRequired(), Length(min=2, max=50)])
-    email = EmailField(label="Enter your email ", validators=[ DataRequired(), Email() ])
+    email = StringField(label="Enter your email ", validators=[ DataRequired() ])
     password = PasswordField("Enter your password", validators=[ DataRequired()])
     confirm_password = PasswordField(label="Re-enter your password : ", validators=[ DataRequired(), EqualTo("password")])
     submit = SubmitField("Sign In ")
@@ -65,7 +65,7 @@ class SignForm(FlaskForm):
 
 class UpdateForm(FlaskForm):
     username = StringField(label="Enter your name", validators=[DataRequired(), Length(min=2, max=50)])
-    email = EmailField(label="Enter your email ", validators=[ DataRequired(), Email() ])
+    email = StringField(label="Enter your email ", validators=[ DataRequired()])
     # profile_pic = FileField(label="choose profile", validators=[FileAllowed("Jpf","png")] )
     submit = SubmitField("Update ")
 
@@ -84,7 +84,7 @@ class PostForm (FlaskForm):
     submit = SubmitField("Add")
 
 class ResetRequestForm(FlaskForm):
-    email = EmailField("Enter your email: ", validators=[ DataRequired(), Email()])
+    email = StringField("Enter your email: ", validators=[ DataRequired()])
     submit = SubmitField("Request Password Reset")
     def validate_email(self, email):
         if email.data != current_user.email:
