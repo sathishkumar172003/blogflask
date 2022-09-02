@@ -2,7 +2,8 @@
 
 
 {% block content %}
-
+<div class=" row  mt-3" >
+<div class="card col-lg-8">
 {% with messages = get_flashed_messages(with_categories = true) %}
 {% for category, message in messages %}
     <div class="alert alert-{{category}}">
@@ -11,21 +12,23 @@
 
 {% endfor %}
 {% endwith %}
-
+    </div>
+</div>
 
     {% for post in posts.items %}
 
 
-<div class=" mt-2 " style="width:750px; position:relative; left:120px;">
-<div class="card">
+<div class=" row  mt-3" >
+
+<div class="card col-lg-8 ">
   <div class="card-header" style="height:10px; color:blue;">
-      <a href="{{url_for('user_post', user_id = post.user_id )}}" <h5 style="display:inline-block " >{{ post.author.username }}</h5></a>
+      <a href="{{url_for('user_post', user_id = post.user_id )}}" <h5 class='text-primary'style="display:inline-block " >{{ post.author.username }}</h5></a>
       <small  class="text-muted" >{{ post.posted_date.strftime('%Y-%m-%d')}}</small>
   </div>
   <div class="card-body">
       <img class="rounded-circle article-img account-img" style = 'width:40px; height:40px; margin-left: -10px; margin-top:7px;' src = "{{ photo }}">
 
-    <h3 class="card-title">{{post.title }}</h3>
+    <a href="{{url_for('user_post', user_id = post.user_id )}}"  ><h3 class="card-title" style="color:black;">{{post.title }}</h3></a>
     <p class="card-text">{{post.content}}</p>
     <a href="{{ url_for('blogs', id = post.id )}}" class="btn btn-outline-primary " style="margin-left:50px;">Read Full</a>
   </div>
@@ -34,13 +37,15 @@
     </div>
 {% endfor %}
 
-<div class="container mt-3 " >
+
     {% for page_num in posts.iter_pages() %}
 {% if page_num %}
+
         {% if posts.page == page_num %}
-            <a class="btn btn-primary" href="{{ url_for('home', page=page_num)}}">{{ page_num }}</a>
+
+            <a class="btn btn-primary " href="{{ url_for('home', page=page_num)}}" >{{ page_num }}</a>
         {% else %}
-            <a class="btn btn-outline-primary" href="{{ url_for('home', page=page_num)}}">{{ page_num }}</a>
+            <a class="btn btn-outline-primary " href="{{ url_for('home', page=page_num)}}">{{ page_num }}</a>
         {% endif %}
 
     {% else %}
@@ -48,8 +53,6 @@
 ...
 {% endif %}
 {% endfor %}
-
-</div>
 
 
 {% endblock content %}

@@ -13,7 +13,7 @@
     <form method="post" action="{{url_for('sign')}}" novalidate>
         {{ form.csrf_token }}
         <i class="fa-solid fa-user fa-2x signicon"></i>
-        <legend class = 'legendstyle '>Sign In </legend>
+        <legend class = 'formheading '>Sign In </legend>
         <div class="form-group mt-4">
             {{form.username.label (class= 'form-label' )}}
             {% if form.username.errors %}

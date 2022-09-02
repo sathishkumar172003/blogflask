@@ -13,8 +13,9 @@
 
 
 
-<div class=" mt-2 " style="width:750px; position:relative; left:120px;">
-<div class="card">
+<div class=" row mt-3 " >
+
+<div class="card col-lg-8 col-sm-12 mt-3">
   <div class="card-header" style="height:10px; color:blue;">
       <h5 style="display:inline-block " >{{ post.author.username }}</h5>
       <small  class="text-muted" >{{ post.posted_date.strftime('%Y-%m-%d')}}</small>
@@ -26,12 +27,13 @@
     <p class="card-text">{{post.content}}</p>
   </div>
     <div class="card-footer">
-        <button><a href="{{url_for('update_blog', process_id = post.id)}}" > Update BLog</a></button>
-        <button><a href="{{url_for('delete_blog', process_id = post.id)}}" > Delete BLog</a></button>
+<a href="{{url_for('update_blog', process_id = post.id)}}" class="btn btn-outline-primary"> Update BLog</a></button>
+<a href="{{url_for('delete_blog', process_id = post.id)}}" class="btn btn-outline-primary"> Delete BLog</a></button>
 
     </div>
 </div>
-    </div>
+        </div>
+
 
 
 {% endblock content %}

@@ -4,14 +4,16 @@ from datetime import datetime
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user,current_user
 from flask_wtf import FlaskForm
+import os
+
 
 from wtforms import StringField, SubmitField, PasswordField, TextAreaField
 from wtforms.validators import EqualTo, DataRequired, Length, ValidationError
 import email_validator
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = 'sathishkumar17'
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///project23.db'
+app.config["SECRET_KEY"] = 'sathish' #os.environ.get('SECRET_KEY')
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///project23.db'#os.environ.get('DATABASE_URI','sqlite:///project23.db')
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt()
@@ -100,7 +102,7 @@ class ChangePassword(FlaskForm):
 @app.route("/" )
 def home():
     page = request.args.get('page', 1, type=int)
-    post = Post.query.order_by(Post.posted_date.desc()).paginate(per_page=3)
+    post = Post.query.order_by(Post.posted_date.desc()).paginate(per_page=4)
     photo = '../static/default.png'
     return render_template("home.html", user = current_user, posts = post , photo  = photo)
 
@@ -242,8 +244,12 @@ def user_post(user_id):
     post = Post.query.filter_by(user_id = user.id).order_by(Post.posted_date.desc()).\
         paginate(per_page=3)
     photo = '../static/default.png'
+    for posts in post.items:
+        name =  posts.author.username
+        break
 
-    return render_template("user_post.html", user = current_user, posts = post,page = page,  photo = photo)
+
+    return render_template("user_post.html", user = current_user, posts = post,page = page,  photo = photo, name = name)
 
 @app.route("/resetrequest", methods = [ 'POST', 'GET'])
 @login_required
@@ -270,4 +276,4 @@ def change_password():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True)
